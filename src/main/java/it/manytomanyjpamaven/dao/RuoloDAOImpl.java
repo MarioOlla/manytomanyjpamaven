@@ -17,8 +17,7 @@ public class RuoloDAOImpl implements RuoloDAO {
 
 	@Override
 	public List<Ruolo> list() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return entityManager.createQuery("from Ruolo" , Ruolo.class).getResultList();
 	}
 
 	@Override
@@ -28,7 +27,9 @@ public class RuoloDAOImpl implements RuoloDAO {
 
 	@Override
 	public void update(Ruolo ruoloInstance) throws Exception {
-		// TODO Auto-generated method stub
+		if(ruoloInstance == null)
+			throw new Exception("Impossibile eseguire oprezaioni sul DB. Input non valido.");
+		ruoloInstance = entityManager.merge(ruoloInstance);
 
 	}
 
@@ -44,7 +45,9 @@ public class RuoloDAOImpl implements RuoloDAO {
 
 	@Override
 	public void delete(Ruolo ruoloInstance) throws Exception {
-		// TODO Auto-generated method stub
+		if(ruoloInstance == null)
+			throw new Exception("Impossibile eseguire oprezaioni sul DB. Input non valido.");
+		entityManager.remove(entityManager.merge(ruoloInstance));
 
 	}
 
@@ -56,6 +59,20 @@ public class RuoloDAOImpl implements RuoloDAO {
 				.setParameter(2, codice);
 		
 		return query.getResultStream().findFirst().orElse(null);
+	}
+
+	@Override
+	public Long countUtentiAdmin() throws Exception {
+		Long result = entityManager.createQuery("select count(u) from Utente u inner join u.ruoli r where r.descrizione='Administrator'", Long.class).getResultStream().findFirst().orElse(null);
+		if(result == null)
+			throw new Exception("La ricerca non ha prodotto risultati");
+		return result;
+	}
+
+	@Override
+	public List<String> allDescrizioniDistinteRuoliAssociati() throws Exception {
+		List<String> result = entityManager.createQuery("select distinct r.descrizione from Utente u inner join u.ruoli r", String.class).getResultList();
+		return result;
 	}
 
 }

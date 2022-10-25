@@ -1,5 +1,6 @@
 package it.manytomanyjpamaven.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -66,6 +67,25 @@ public class UtenteDAOImpl implements UtenteDAO {
 		TypedQuery<Utente> query = entityManager.createQuery("select u FROM Utente u left join fetch u.ruoli r where u.id = :idUtente",Utente.class);
 		query.setParameter("idUtente", id);
 		return query.getResultList().stream().findFirst().orElse(null);
+	}
+
+	@Override
+	public List<Utente> allUtentiCreatiNelMeseDi(Date data) throws Exception {
+		TypedQuery<Utente> query = entityManager.createQuery("select u FROM Utente u where YEAR(u.dateCreated)= YEAR(:dateCreated) and MONTH(u.dateCreated)= MONTH(:dateCreated)",Utente.class);
+		query.setParameter("dateCreated", new java.sql.Date(data.getTime()));
+		return query.getResultList();
+	}
+
+	@Override
+	public List<Utente> allUtentiConPasswordLungaMenoDi8Carattei() throws Exception {
+		TypedQuery<Utente> query = entityManager.createQuery("from Utente u where LENGTH(u.password) < 8",Utente.class);
+		return query.getResultList();
+	}
+
+	@Override
+	public boolean anyAdminInUtentiDisabilitati() throws Exception {
+		TypedQuery<Utente> query = entityManager.createQuery("from Utente u join fetch u.ruoli r where u.stato = 'DISABILITATO' and r.descrizione='Administrator'",Utente.class);
+		return !query.getResultList().isEmpty();
 	}
 
 }

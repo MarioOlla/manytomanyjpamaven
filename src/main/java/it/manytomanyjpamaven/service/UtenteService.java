@@ -1,5 +1,6 @@
 package it.manytomanyjpamaven.service;
 
+import java.util.Date;
 import java.util.List;
 
 import it.manytomanyjpamaven.dao.RuoloDAO;
@@ -20,13 +21,20 @@ public interface UtenteService {
 	public void rimuovi(Long idUtente) throws Exception;
 
 	public void aggiungiRuolo(Utente utenteEsistente, Ruolo ruoloInstance) throws Exception;
-	
-	public void rimuoviRuoloDaUtente(Long idUtente,Long idRuolo) throws Exception;
+
+	public void rimuoviRuoloDaUtente(Long idUtente, Long idRuolo) throws Exception;
 
 	public Utente caricaUtenteSingoloConRuoli(Long id) throws Exception;
 
+	public List<Utente> tuttiUtentiCreatiNelMeseDi(Date data) throws Exception;
+
+	List<Utente> tuttiUtentiConPasswordLungaMenoDi8Caratteri() throws Exception;
+	
+	boolean ciSonoAdminTraUtentiDisabilitati() throws Exception;
+
 	// per injection
 	public void setUtenteDAO(UtenteDAO utenteDAO);
+
 	public void setRuoloDAO(RuoloDAO ruoloDAO);
 
 }
