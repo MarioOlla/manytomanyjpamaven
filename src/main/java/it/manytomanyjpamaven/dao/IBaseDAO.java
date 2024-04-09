@@ -1,8 +1,10 @@
 package it.manytomanyjpamaven.dao;
 
+import jakarta.persistence.EntityManager;
+
 import java.util.List;
 
-import javax.persistence.EntityManager;
+
 
 public interface IBaseDAO<T> {
 

@@ -2,7 +2,7 @@ package it.manytomanyjpamaven.service;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 import it.manytomanyjpamaven.dao.EntityManagerUtil;
 import it.manytomanyjpamaven.dao.MyDAOFactory;

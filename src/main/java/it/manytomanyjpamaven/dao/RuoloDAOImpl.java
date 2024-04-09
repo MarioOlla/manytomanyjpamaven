@@ -1,11 +1,10 @@
 package it.manytomanyjpamaven.dao;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-
 import it.manytomanyjpamaven.model.Ruolo;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+
+import java.util.List;
 
 public class RuoloDAOImpl implements RuoloDAO {
 
